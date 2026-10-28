@@ -101,8 +101,8 @@ if (!IS_VANILLA && !IS_EXTENSION) {
         try {
             if (RendererSettings.store.enableReactDevtools)
                 installExt("fmkadmapgofadopljbjfkapdkoienihi")
-                    .then(() => console.info("[Tqd Cord] Installed React Developer Tools"))
-                    .catch(err => console.error("[Tqd Cord] Failed to install React Developer Tools", err));
+                    .then(() => console.info("[VnCord] Installed React Developer Tools"))
+                    .catch(err => console.error("[VnCord] Failed to install React Developer Tools", err));
         } catch { }
 
         initCsp();

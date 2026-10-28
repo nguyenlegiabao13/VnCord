@@ -1,8 +1,8 @@
 {
-    "name": "tqdcord",
+    "name": "vncord",
     "private": "true",
     "version": "1.15.13.0",
-    "description": "Tqd Cord, a Discord client mod based on Equicord",
+    "description": "VnCord, a Discord client mod based on Equicord",
     "homepage": "https://github.com/Equicord/Equicord#readme",
     "bugs": {
         "url": "https://github.com/Equicord/Equicord/issues"
@@ -12,7 +12,7 @@
         "url": "git+https://github.com/Equicord/Equicord.git"
     },
     "license": "GPL-3.0-or-later",
-    "author": "Tqd",
+    "author": "VnCord",
     "scripts": {
         "build": "node --require=./scripts/suppressExperimentalWarnings.js scripts/build/build.mjs",
         "buildStandalone": "pnpm build --standalone",

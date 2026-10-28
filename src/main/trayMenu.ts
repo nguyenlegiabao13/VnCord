@@ -82,31 +82,31 @@ const notify = (window: BaseWindow | undefined, title: string, message: string) 
 function createVencordMenuItems(): MenuItemConstructorOptions[] {
     return [
         {
-            label: "Tqd Cord",
+            label: "VnCord",
             submenu: [
                 {
-                    label: "About Tqd Cord",
+                    label: "About VnCord",
                     click: () => openAboutWindow()
                 },
                 {
-                    label: "Update Tqd Cord",
+                    label: "Update VnCord",
                     async click(_item, window) {
                         try {
                             const updateAvailable = await updater.fetchUpdate();
                             if (!updateAvailable) {
-                                return notify(window, "No Update Available", "You are already using the latest version of Tqd Cord.");
+                                return notify(window, "No Update Available", "You are already using the latest version of VnCord.");
                             }
 
                             const result = await updater.applyUpdate();
                             if (!result) {
-                                return notify(window, "Update Failed", "Failed to apply the update for Tqd Cord.");
+                                return notify(window, "Update Failed", "Failed to apply the update for VnCord.");
                             }
 
-                            await notify(window, "Update Successful", "Now relaunching Tqd Cord to apply the update.");
+                            await notify(window, "Update Successful", "Now relaunching VnCord to apply the update.");
                             app.relaunch();
                             app.exit();
                         } catch (e) {
-                            notify(window, "Update Error", `An error occurred while updating Tqd Cord.\n\n${String(e)}`);
+                            notify(window, "Update Error", `An error occurred while updating VnCord.\n\n${String(e)}`);
                         }
                     }
                 },
@@ -128,7 +128,7 @@ export function patchTrayMenu(): void {
     const originalBuildFromTemplate = Menu.buildFromTemplate;
 
     Menu.buildFromTemplate = function (template: MenuItemConstructorOptions[]) {
-        const alreadyPatched = template.some(item => item.label === "Tqd Cord");
+        const alreadyPatched = template.some(item => item.label === "VnCord");
         if (isTrayMenu(template) && !alreadyPatched) {
             const insertIndex = findInsertIndex(template);
             const vencordItems = createVencordMenuItems();

@@ -1,9 +1,9 @@
 {
     "manifest_version": 2,
     "minimum_chrome_version": "91",
-    "name": "Tqd Cord Web",
-    "description": "Tqd Cord, a Discord client mod in your browser",
-    "author": "Tqd",
+    "name": "VnCord Web",
+    "description": "VnCord, a Discord client mod in your browser",
+    "author": "VnCord",
     "homepage_url": "https://github.com/Equicord/Equicord",
     "icons": {
         "128": "icon.png"

@@ -16,12 +16,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { Devs, EquicordDevs } from "@utils/constants";
+import { Devs, VnCordDevs } from "@utils/constants";
 import definePlugin from "@utils/types";
 
 export default definePlugin({
     name: "ServerListAPI",
-    authors: [Devs.kemo, EquicordDevs.Etorix],
+    authors: [Devs.kemo, VnCordDevs.Etorix],
     description: "API required for plugins that modify the server list.",
     isModified: true,
 

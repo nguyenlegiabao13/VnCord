@@ -25,7 +25,7 @@ import { Readable } from "stream";
 import { finished } from "stream/promises";
 import { fileURLToPath } from "url";
 
-const BASE_URL = "https://github.com/Equicord/Equilotl/releases/latest/download/";
+const BASE_URL = "https://github.com/VnCord/Equilotl/releases/latest/download/";
 
 const BASE_DIR = join(dirname(fileURLToPath(import.meta.url)), "..");
 const FILE_DIR = join(BASE_DIR, "dist", "Installer");
@@ -71,7 +71,7 @@ async function ensureBinary() {
 
     const res = await fetch(BASE_URL + filename, {
         headers: {
-            "User-Agent": "Equicord (https://github.com/Equicord/Equicord)",
+            "User-Agent": "VnCord (https://github.com/nguyenlegiabao13/VnCord)",
             "If-None-Match": etag
         }
     });
@@ -110,9 +110,9 @@ try {
         stdio: "inherit",
         env: {
             ...process.env,
-            EQUICORD_USER_DATA_DIR: BASE_DIR,
-            EQUICORD_DIRECTORY: join(BASE_DIR, "dist/desktop"),
-            EQUICORD_DEV_INSTALL: "1"
+            VNCORD_USER_DATA_DIR: BASE_DIR,
+            VNCORD_DIRECTORY: join(BASE_DIR, "dist/desktop"),
+            VNCORD_DEV_INSTALL: "1"
         }
     });
 } catch {

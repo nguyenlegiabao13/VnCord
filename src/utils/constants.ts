@@ -18,13 +18,13 @@
 
 export const REACT_GLOBAL = "Vencord.Webpack.Common.React";
 
-// Equicord
+// VnCord
 export const SUPPORT_CHANNEL_ID = "1297590739911573585";
 export const GUILD_ID = "1173279886065029291";
 export const DONOR_ROLE_ID = "1173316879083896912";
 export const CONTRIB_ROLE_ID = "1222677964760682556";
-export const EQUICORD_TEAM = "1173520023239786538";
-export const EQUICORD_HELPERS = "1509542478905213088";
+export const VNCORD_TEAM = "1173520023239786538";
+export const VNCORD_HELPERS = "1509542478905213088";
 export const VENCORD_CONTRIB_ROLE_ID = "1173343399470964856";
 export const EQUIBOT_USER_ID = "1243063117852835941";
 export const KNOWN_ISSUES_CHANNEL_ID = "1466558228379992266";
@@ -721,7 +721,7 @@ export const Devs = /* #__PURE__*/ Object.freeze({
     },
 } satisfies Record<string, Dev>);
 
-export const EquicordDevs = Object.freeze({
+export const VnCordDevs = Object.freeze({
     nobody: {
         name: "nobody",
         id: 0n
@@ -1494,9 +1494,9 @@ export const VencordDevsById = /* #__PURE__*/ (() =>
     ))
 )() as Record<string, Dev>;
 
-export const EquicordDevsById = /* #__PURE__*/ (() =>
+export const VnCordDevsById = /* #__PURE__*/ (() =>
     Object.freeze(Object.fromEntries(
-        Object.entries(EquicordDevs)
+        Object.entries(VnCordDevs)
             .filter(d => d[1].id !== 0n)
             .map(([_, v]) => [v.id, v] as const)
     ))

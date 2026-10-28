@@ -107,7 +107,7 @@ function toCodeBlock(s: string, indentation = 0, isDiscord = false) {
 async function printReport() {
     console.log();
 
-    console.log("# Equicord Report" + (CANARY ? " (Canary)" : ""));
+    console.log("# VnCord Report" + (CANARY ? " (Canary)" : ""));
 
     console.log();
 
@@ -211,7 +211,7 @@ async function printReport() {
         }
 
         const body = JSON.stringify({
-            username: "Equicord Reporter" + (CANARY ? " (Canary)" : ""),
+            username: "VnCord Reporter" + (CANARY ? " (Canary)" : ""),
             embeds
         });
 
@@ -258,7 +258,7 @@ page.on("console", async e => {
 
     const firstArg = await rawArgs[0]?.jsonValue();
 
-    const isEquicord = firstArg === "[Equicord]";
+    const isVnCord = firstArg === "[VnCord]";
     const isDebug = firstArg === "[PUP_DEBUG]";
     const isReporterMeta = firstArg === "[REPORTER_META]";
 
@@ -268,7 +268,7 @@ page.on("console", async e => {
     }
 
     outer:
-    if (isEquicord) {
+    if (isVnCord) {
         try {
             var args = await Promise.all(e.args().map(a => a.jsonValue()));
         } catch {

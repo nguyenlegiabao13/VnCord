@@ -1167,7 +1167,7 @@ export function HammerAndChiselIcon(props: IconProps) {
     );
 }
 
-export function EquicordIcon(props: IconProps) {
+export function VnCordIcon(props: IconProps) {
     return (
         <Icon
             {...props}

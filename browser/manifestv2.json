@@ -4,7 +4,7 @@
     "name": "VnCord Web",
     "description": "VnCord, a Discord client mod in your browser",
     "author": "VnCord",
-    "homepage_url": "https://github.com/Equicord/Equicord",
+    "homepage_url": "https://github.com/nguyenlegiabao13/VnCord",
     "icons": {
         "128": "icon.png"
     },
@@ -32,7 +32,7 @@
                 "*://*.discord.com/*"
             ],
             "js": [
-                "dist/Equicord.js"
+                "dist/VnCord.js"
             ],
             "all_frames": true,
             "world": "MAIN"
@@ -44,8 +44,8 @@
         ]
     },
     "web_accessible_resources": [
-        "dist/Equicord.js",
-        "dist/Equicord.css"
+        "dist/VnCord.js",
+        "dist/VnCord.css"
     ],
     "browser_specific_settings": {
         "gecko": {

@@ -101,7 +101,7 @@ const enum SearchStatus {
     FAVORITES,
     ENABLED,
     DISABLED,
-    EQUICORD,
+    VNCORD,
     VENCORD,
     NEW,
     USER_PLUGINS,
@@ -215,8 +215,8 @@ export default function PluginSettings() {
             case SearchStatus.ENABLED:
                 if (!isPluginEnabled(plugin.name)) return false;
                 break;
-            case SearchStatus.EQUICORD:
-                if (!PluginMeta[plugin.name].folderName.startsWith("src/equicordplugins/")) return false;
+            case SearchStatus.VNCORD:
+                if (!PluginMeta[plugin.name].folderName.startsWith("src/vncordplugins/")) return false;
                 break;
             case SearchStatus.VENCORD:
                 if (!PluginMeta[plugin.name].folderName.startsWith("src/plugins/")) return false;
@@ -420,7 +420,7 @@ export default function PluginSettings() {
                             { label: "Show Favorites", value: SearchStatus.FAVORITES },
                             { label: "Show Enabled", value: SearchStatus.ENABLED },
                             { label: "Show Disabled", value: SearchStatus.DISABLED },
-                            { label: "Show VnCord", value: SearchStatus.EQUICORD },
+                            { label: "Show VnCord", value: SearchStatus.VNCORD },
                             { label: "Show Vencord", value: SearchStatus.VENCORD },
                             { label: "Show New", value: SearchStatus.NEW },
                             hasUserPlugins && { label: "Show UserPlugins", value: SearchStatus.USER_PLUGINS },

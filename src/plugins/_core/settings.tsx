@@ -185,58 +185,58 @@ export default definePlugin({
         const layout = originalLayoutBuilder.buildLayout();
         if (originalLayoutBuilder.key !== "$Root") return layout;
         if (!Array.isArray(layout)) return layout;
-        if (layout.some(s => s?.key === "equicord_section")) return layout;
+        if (layout.some(s => s?.key === "vncord_section")) return layout;
 
         const { buildEntry } = this;
 
-        const equicordEntries: SettingsLayoutNode[] = [
+        const vncordEntries: SettingsLayoutNode[] = [
             buildEntry({
-                key: "equicord_main",
+                key: "vncord_main",
                 title: "VnCord",
                 panelTitle: "VnCord Settings",
                 Component: VencordTab,
                 Icon: MainSettingsIcon
             }),
             buildEntry({
-                key: "equicord_plugins",
+                key: "vncord_plugins",
                 title: "Plugins",
                 Component: PluginsTab,
                 Icon: PluginsIcon
             }),
             buildEntry({
-                key: "equicord_themes",
+                key: "vncord_themes",
                 title: "Themes",
                 Component: ThemesTab,
                 Icon: PaintbrushIcon
             }),
             !IS_UPDATER_DISABLED && UpdaterTab && buildEntry({
-                key: "equicord_updater",
+                key: "vncord_updater",
                 title: "Updater",
                 panelTitle: "VnCord Updater",
                 Component: UpdaterTab,
                 Icon: UpdaterIcon
             }),
             buildEntry({
-                key: "equicord_changelog",
+                key: "vncord_changelog",
                 title: "Changelog",
                 Component: ChangelogTab,
                 Icon: LogIcon,
             }),
             buildEntry({
-                key: "equicord_cloud",
+                key: "vncord_cloud",
                 title: "Cloud",
                 panelTitle: "VnCord Cloud",
                 Component: CloudTab,
                 Icon: CloudIcon
             }),
             buildEntry({
-                key: "equicord_backup_restore",
+                key: "vncord_backup_restore",
                 title: "Backup & Restore",
                 Component: BackupAndRestoreTab,
                 Icon: BackupRestoreIcon
             }),
             !IS_STANDALONE && PatchHelperTab && buildEntry({
-                key: "equicord_patch_helper",
+                key: "vncord_patch_helper",
                 title: "Patch Helper",
                 Component: PatchHelperTab,
                 Icon: PatchHelperIcon
@@ -244,11 +244,11 @@ export default definePlugin({
             ...this.customEntries.map(buildEntry)
         ].filter(isTruthy);
 
-        const equicordSection: SettingsLayoutNode = {
-            key: "equicord_section",
+        const vncordSection: SettingsLayoutNode = {
+            key: "vncord_section",
             type: LayoutTypes.SECTION,
             useTitle: () => "VnCord Settings",
-            buildLayout: () => equicordEntries
+            buildLayout: () => vncordEntries
         };
 
         const { settingsLocation } = settings.store;
@@ -271,7 +271,7 @@ export default definePlugin({
             idx += 1;
         }
 
-        layout.splice(idx, 0, equicordSection);
+        layout.splice(idx, 0, vncordSection);
 
         return layout;
     },

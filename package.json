@@ -2,14 +2,14 @@
     "name": "vncord",
     "private": "true",
     "version": "1.15.13.0",
-    "description": "VnCord, a Discord client mod based on Equicord",
-    "homepage": "https://github.com/Equicord/Equicord#readme",
+    "description": "VnCord, a Discord client mod based on VnCord",
+    "homepage": "https://github.com/nguyenlegiabao13/VnCord#readme",
     "bugs": {
-        "url": "https://github.com/Equicord/Equicord/issues"
+        "url": "https://github.com/nguyenlegiabao13/VnCord/issues"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Equicord/Equicord.git"
+        "url": "git+https://github.com/nguyenlegiabao13/VnCord.git"
     },
     "license": "GPL-3.0-or-later",
     "author": "VnCord",
@@ -25,7 +25,7 @@
         "watchWeb": "pnpm buildWeb --watch",
         "generateDevsList": "tsx scripts/generateDevsList.ts",
         "generatePluginJson": "tsx scripts/generatePluginList.ts",
-        "generateEquicordPluginJson": "tsx scripts/generatePluginList.ts --equicord",
+        "generateVnCordPluginJson": "tsx scripts/generatePluginList.ts --vncord",
         "generateVencordPluginJson": "tsx scripts/generatePluginList.ts --vencord",
         "generateTypes": "tspc --emitDeclarationOnly --declaration --outDir packages/vencord-types --allowJs false",
         "inject": "node scripts/runInstaller.mjs -- --install",

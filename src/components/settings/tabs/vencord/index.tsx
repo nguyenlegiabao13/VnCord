@@ -166,7 +166,7 @@ function Switches() {
     });
 }
 
-function EquicordSettings() {
+function VnCordSettings() {
     const donateImage = useMemo(() =>
         Math.random() > 0.5 ? DEFAULT_DONATE_IMAGE : SHIGGY_DONATE_IMAGE,
         []
@@ -176,16 +176,16 @@ function EquicordSettings() {
 
     return (
         <SettingsTab>
-            {(isEquicordDonor(user?.id) || isVencordDonor(user?.id)) ? (
+            {(isVnCordDonor(user?.id) || isVencordDonor(user?.id)) ? (
                 <SpecialCard
                     title="Donations"
                     subtitle="Thank you for donating!"
                     description={
-                        isEquicordDonor(user?.id) && isVencordDonor(user?.id)
-                            ? "All Vencord users can see your Vencord donor badge, and Equicord users can see your Equicord donor badge. To change your Vencord donor badge, contact @vending.machine. For your Equicord donor badge, make a ticket in Equicord's server."
+                        isVnCordDonor(user?.id) && isVencordDonor(user?.id)
+                            ? "All Vencord users can see your Vencord donor badge, and VnCord users can see your VnCord donor badge. To change your Vencord donor badge, contact @vending.machine. For your VnCord donor badge, make a ticket in VnCord's server."
                             : isVencordDonor(user?.id)
                                 ? "All Vencord users can see your badge! You can manage your perks by messaging @vending.machine."
-                                : "All Equicord users can see your badge! You can manage your perks by making a ticket in Equicord's server."
+                                : "All VnCord users can see your badge! You can manage your perks by making a ticket in VnCord's server."
                     }
                     cardImage={VENNIE_DONATOR_IMAGE}
                     backgroundImage={DONOR_BACKGROUND_IMAGE}
@@ -196,7 +196,7 @@ function EquicordSettings() {
             ) : (
                 <SpecialCard
                     title="Support the Project"
-                    description="Please consider supporting the development of Equicord by donating!"
+                    description="Please consider supporting the development of VnCord by donating!"
                     cardImage={donateImage}
                     backgroundImage={DONOR_BACKGROUND_IMAGE}
                     backgroundColor="#c3a3ce"
@@ -208,7 +208,7 @@ function EquicordSettings() {
                 <SpecialCard
                     title="Contributions"
                     subtitle="Thank you for contributing!"
-                    description="Since you've contributed to Equicord you now have a cool new badge!"
+                    description="Since you've contributed to VnCord you now have a cool new badge!"
                     cardImage={COZY_CONTRIB_IMAGE}
                     backgroundImage={CONTRIB_BACKGROUND_IMAGE}
                     backgroundColor="#EDCC87"
@@ -294,10 +294,10 @@ function EquicordSettings() {
     );
 }
 
-export default wrapTab(EquicordSettings, "VnCord Settings");
+export default wrapTab(VnCordSettings, "VnCord Settings");
 
-export function isEquicordDonor(userId: string): boolean {
-    const donorBadges = BadgeAPI.getEquicordDonorBadges(userId);
+export function isVnCordDonor(userId: string): boolean {
+    const donorBadges = BadgeAPI.getVnCordDonorBadges(userId);
     return GuildMemberStore.getMember(GUILD_ID, userId)?.roles.includes(DONOR_ROLE_ID) || !!donorBadges;
 }
 

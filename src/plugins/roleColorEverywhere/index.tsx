@@ -18,7 +18,7 @@
 
 import { isPluginEnabled } from "@api/PluginManager";
 import { definePluginSettings } from "@api/Settings";
-import customUserColors, { getCustomColorString } from "@equicordplugins/customUserColors";
+import customUserColors, { getCustomColorString } from "@vncordplugins/customUserColors";
 import { Devs } from "@utils/constants";
 import { Logger } from "@utils/Logger";
 import definePlugin, { makeRange, OptionType } from "@utils/types";

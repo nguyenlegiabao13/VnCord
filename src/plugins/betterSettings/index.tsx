@@ -6,8 +6,8 @@
 
 import { definePluginSettings } from "@api/Settings";
 import { disableStyle, enableStyle } from "@api/Styles";
-import { AchievementsIcon, AppsIcon, CreditCardIcon, EquicordIcon, GameControllerIcon, HammerAndChiselIcon, MainSettingsIcon, PencilSparkleIcon, UserIcon } from "@components/Icons";
-import { buildPluginMenuEntries, buildThemeMenuEntries } from "@equicordplugins/equicordToolbox/menu";
+import { AchievementsIcon, AppsIcon, CreditCardIcon, VnCordIcon, GameControllerIcon, HammerAndChiselIcon, MainSettingsIcon, PencilSparkleIcon, UserIcon } from "@components/Icons";
+import { buildPluginMenuEntries, buildThemeMenuEntries } from "@vncordplugins/vncordToolbox/menu";
 import { Devs } from "@utils/constants";
 import { classNameFactory } from "@utils/css";
 import { getIntlMessage } from "@utils/discord";
@@ -26,7 +26,7 @@ const Classes = findCssClassesLazy("animating", "baseLayer", "bg", "layer", "lay
 const SECTION_ICONS: Record<string, Icon> = {
     profile_section: PencilSparkleIcon,
     user_section: UserIcon,
-    equicord_section: EquicordIcon,
+    vncord_section: VnCordIcon,
     billing_section: CreditCardIcon,
     app_section: AppsIcon,
     games_and_apps_section: GameControllerIcon,
@@ -206,8 +206,8 @@ export default definePlugin({
             if (!item?.props) continue;
             const { key, props } = item;
 
-            if (key === "equicord_plugins" || key === "equicord_themes") {
-                const children = key === "equicord_plugins"
+            if (key === "vncord_plugins" || key === "vncord_themes") {
+                const children = key === "vncord_plugins"
                     ? buildPluginMenuEntries()
                     : buildThemeMenuEntries();
 

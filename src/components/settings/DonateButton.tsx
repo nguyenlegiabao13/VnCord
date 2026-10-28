@@ -24,11 +24,11 @@ import { ButtonProps } from "@vencord/discord-types";
 import { showToast } from "@webpack/common";
 
 export function DonateButton({
-    equicord = false,
+    vncord = false,
     className,
     ...props
-}: Partial<ButtonProps> & { equicord?: boolean; }) {
-    const link = equicord ? "https://github.com/sponsors/thororen1234" : "https://github.com/sponsors/Vendicated";
+}: Partial<ButtonProps> & { vncord?: boolean; }) {
+    const link = vncord ? "https://github.com/sponsors/thororen1234" : "https://github.com/sponsors/Vendicated";
     return (
         <Button
             {...props}
@@ -72,7 +72,7 @@ export function TranslateButton({
     className,
     ...props
 }: Partial<ButtonProps>) {
-    const link = "https://weblate.equicord.org/projects/equicord/";
+    const link = "https://weblate.equicord.org/projects/vncord/";
     return (
         <Button
             {...props}

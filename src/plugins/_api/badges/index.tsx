@@ -25,13 +25,13 @@ import { openContributorModal } from "@components/settings/tabs";
 import { Devs } from "@utils/constants";
 import { copyWithToast } from "@utils/discord";
 import { Logger } from "@utils/Logger";
-import { shouldShowContributorBadge, shouldShowEquicordContributorBadge } from "@utils/misc";
+import { shouldShowContributorBadge, shouldShowVnCordContributorBadge } from "@utils/misc";
 import definePlugin from "@utils/types";
 import { ContextMenuApi, Menu, showToast, UserStore } from "@webpack/common";
 
 import Plugins, { PluginMeta } from "~plugins";
 
-import { EquicordDonorModal, EquicordTranslatorModal, VencordDonorModal } from "./modals";
+import { VnCordDonorModal, VnCordTranslatorModal, VencordDonorModal } from "./modals";
 
 const ContributorBadge: ProfileBadge = {
     id: "vencord_contributor_badge",
@@ -45,15 +45,15 @@ const ContributorBadge: ProfileBadge = {
     onClick: (_, { userId }) => openContributorModal(UserStore.getUser(userId))
 };
 
-const EquicordContributorBadge: ProfileBadge = {
-    id: "equicord_contributor_badge",
-    description: "Equicord Contributor",
-    infoLabel: "Equicord",
+const VnCordContributorBadge: ProfileBadge = {
+    id: "vncord_contributor_badge",
+    description: "VnCord Contributor",
+    infoLabel: "VnCord",
     rarity: BadgeRarity.MYTHIC,
     iconSrc: "https://cdn.discordapp.com/emojis/1563740725726683167.webp?size=128",
     largeIconSrc: "https://cdn.discordapp.com/emojis/1563740725726683167.webp?size=512",
     position: BadgePosition.START,
-    shouldShow: ({ userId }) => shouldShowEquicordContributorBadge(userId),
+    shouldShow: ({ userId }) => shouldShowVnCordContributorBadge(userId),
     onClick: (_, { userId }) => openContributorModal(UserStore.getUser(userId)),
     props: {
         style: {
@@ -66,7 +66,7 @@ const EquicordContributorBadge: ProfileBadge = {
 const UserPluginContributorBadge: ProfileBadge = {
     id: "user_plugin_contributor_badge",
     description: "User Plugin Contributor",
-    infoLabel: "Equicord",
+    infoLabel: "VnCord",
     rarity: BadgeRarity.MYTHIC,
     iconSrc: "https://cdn.discordapp.com/emojis/1419345679729295420.webp?size=128",
     largeIconSrc: "https://cdn.discordapp.com/emojis/1419345679729295420.webp?size=512",
@@ -89,7 +89,7 @@ const UserPluginContributorBadge: ProfileBadge = {
 };
 
 let DonorBadges = {} as Record<string, Array<Record<"tooltip" | "badge", string>>>;
-let EquicordDonorBadges = {} as Record<string, Array<Record<"tooltip" | "badge", string>>>;
+let VnCordDonorBadges = {} as Record<string, Array<Record<"tooltip" | "badge", string>>>;
 let DirectoryBadges = {} as Record<string, DirectoryBadge>;
 
 async function loadBadges(url: string, noCache = false) {
@@ -101,10 +101,10 @@ async function loadBadges(url: string, noCache = false) {
 
 async function loadAllBadges(noCache = false) {
     const vencordBadges = await loadBadges("https://badges.vencord.dev/badges.json", noCache);
-    const equicordBadges = await loadBadges("https://badge.equicord.org/badges.json", noCache);
+    const vncordBadges = await loadBadges("https://badge.equicord.org/badges.json", noCache);
 
     DonorBadges = vencordBadges;
-    EquicordDonorBadges = equicordBadges;
+    VnCordDonorBadges = vncordBadges;
 }
 
 let intervalId: any;
@@ -116,7 +116,7 @@ function toDirectoryBadge(b: ProfileBadge, userId: string): DirectoryBadge {
         badge_id: id,
         name: b.name ?? b.description ?? "",
         description: b.detail ?? b.description ?? b.name ?? "",
-        info_label: b.infoLabel ?? "Equicord",
+        info_label: b.infoLabel ?? "VnCord",
         rarity: b.rarity ?? BadgeRarity.COMMON,
         simple_icon_url: b.iconSrc!,
         complex_icon_static_url: b.largeIconSrc ?? b.iconSrc!,
@@ -217,8 +217,8 @@ export default definePlugin({
         return DonorBadges;
     },
 
-    get EquicordDonorBadges() {
-        return EquicordDonorBadges;
+    get VnCordDonorBadges() {
+        return VnCordDonorBadges;
     },
 
     toolboxActions: {
@@ -228,7 +228,7 @@ export default definePlugin({
         }
     },
 
-    userProfileBadges: [ContributorBadge, EquicordContributorBadge, UserPluginContributorBadge],
+    userProfileBadges: [ContributorBadge, VnCordContributorBadge, UserPluginContributorBadge],
 
     async start() {
         await loadAllBadges();
@@ -313,13 +313,13 @@ export default definePlugin({
         } satisfies ProfileBadge));
     },
 
-    getEquicordDonorBadges(userId: string) {
-        return EquicordDonorBadges[userId]?.map((badge, idx) => ({
-            id: `equicord_donor_badge_${idx}`,
+    getVnCordDonorBadges(userId: string) {
+        return VnCordDonorBadges[userId]?.map((badge, idx) => ({
+            id: `vncord_donor_badge_${idx}`,
             iconSrc: badge.badge,
             description: badge.tooltip,
             name: badge.tooltip,
-            infoLabel: "Equicord Donor",
+            infoLabel: "VnCord Donor",
             rarity: BadgeRarity.MYTHIC,
             position: BadgePosition.START,
             props: {
@@ -332,7 +332,7 @@ export default definePlugin({
                 ContextMenuApi.openContextMenu(event, () => <BadgeContextMenu badge={badge} />);
             },
             onClick() {
-                return badge.tooltip === "Equicord Translator" ? EquicordTranslatorModal() : EquicordDonorModal();
+                return badge.tooltip === "VnCord Translator" ? VnCordTranslatorModal() : VnCordDonorModal();
             },
         } satisfies ProfileBadge));
     }

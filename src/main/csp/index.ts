@@ -77,8 +77,7 @@ export const CspPolicies: PolicyMap = {
     "*.tenor.co": ImageAndMediaSrc,
     "*.giphy.com": ImageAndMediaSrc,
 
-    "equicord.org": ImageSrc,
-    "*.equicord.org": ImageSrc,
+    "tqdcord.pages.dev": ImageSrc,
 
     "fonts.gstatic.com": [...ConnectSrc, ...CssSrc],
     "fonts.google.com": ConnectSrc,

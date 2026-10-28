@@ -58,7 +58,7 @@ function CheckBadge({ badge, author }: { badge: string; author: User; }): JSX.El
                         className={roleIcon}
                         name="VnCord Contributor"
                         size={20}
-                        src={"https://equicord.org/assets/favicon.png"}
+                        src={"https://tqdcord.pages.dev/assets/favicon.png"}
                     />
                 </span>
             ) : null;

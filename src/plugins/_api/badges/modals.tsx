@@ -156,7 +156,7 @@ export function VnCordTranslatorModal() {
                         <img
                             className="vc-translate-modal-icon"
                             role="presentation"
-                            src="https://badge.equicord.org/translator.png"
+                            src="https://tqdcord.pages.dev/api/badge/translator.png"
                             alt=""
                         />
                     </Flex>

@@ -39,11 +39,11 @@ import { Alerts, SearchableSelect, Select, useState } from "@webpack/common";
 const ICON_STYLE: React.CSSProperties = { width: 20, height: 20, borderRadius: 4, verticalAlign: "middle" };
 
 function VnCordIcon() {
-    return <img src="https://equicord.org/assets/favicon.png" alt="VnCord" style={ICON_STYLE} />;
+    return <img src="https://tqdcord.pages.dev/assets/favicon.png" alt="VnCord" style={ICON_STYLE} />;
 }
 
 function VencordIcon() {
-    return <img src="https://equicord.org/assets/icons/vencord/icon-light.png" alt="Vencord" style={ICON_STYLE} />;
+    return <img src="https://tqdcord.pages.dev/assets/icons/vencord/icon-light.png" alt="Vencord" style={ICON_STYLE} />;
 }
 
 const RefreshIcon = findComponentByCodeLazy("M4 12a8 8 0 0 1 14.93-4H15");
@@ -59,7 +59,7 @@ function validateUrl(url: string) {
 }
 
 const cloudBackendOptions = [
-    { label: "VnCord Cloud", value: "https://cloud.equicord.org/" },
+    { label: "VnCord Cloud", value: "https://tqdcord.pages.dev/api/cloud/" },
     { label: "Vencord Cloud", value: "https://api.vencord.dev/" }
 ];
 
@@ -98,7 +98,7 @@ function CloudTab() {
 
             <Notice.Info className={Margins.bottom16}>
                 We use our own <Link href="https://github.com/VnCord/Equicloud">Equicloud backend</Link> with enhanced features.
-                View our <Link href="https://equicord.org/cloud/policy">privacy policy</Link> to see what we store and how we use your data.
+                View our <Link href="https://tqdcord.pages.dev/cloud/policy">privacy policy</Link> to see what we store and how we use your data.
                 Equicloud is BSD 3.0 licensed, so you can self-host if preferred.
             </Notice.Info>
 

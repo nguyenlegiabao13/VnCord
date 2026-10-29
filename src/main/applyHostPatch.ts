@@ -7,11 +7,12 @@
 import { existsSync, lstatSync, mkdirSync, readdirSync, renameSync, rmdirSync, statSync, unlinkSync, writeFileSync } from "original-fs";
 import { basename, dirname, join } from "path";
 
+const SHIM_MARKER = "// VnCord installer stub";
 const STUB_PACKAGE = JSON.stringify({ name: "discord", main: "index.js" });
 const VERSION_PREFIX = "app-";
 
 const makeStubIndex = (patcherPath: string) =>
-    `require(${JSON.stringify(patcherPath)});`;
+    `${SHIM_MARKER}\nrequire(${JSON.stringify(patcherPath)});`;
 
 /** `_app.asar` next to `app.asar` marks any patched install. */
 export const isAlreadyPatched = (resources: string) =>
@@ -31,6 +32,7 @@ export const isAlreadyPatched = (resources: string) =>
 export const patchResourcesDir = (resources: string, patcherJsPath: string): boolean => {
     const app = join(resources, "app.asar");
     const _app = join(resources, "_app.asar");
+    const shimDir = join(resources, "app");
 
     if (isAlreadyPatched(resources) || !existsSync(app) || existsSync(_app)) return false;
     try {
@@ -44,17 +46,17 @@ export const patchResourcesDir = (resources: string, patcherJsPath: string): boo
         renameSync(app, _app);
         undo.push(() => renameSync(_app, app));
 
-        mkdirSync(app);
+        mkdirSync(shimDir);
         undo.push(() => {
-            const indexPath = join(app, "index.js");
-            const pkgPath = join(app, "package.json");
+            const indexPath = join(shimDir, "index.js");
+            const pkgPath = join(shimDir, "package.json");
             if (existsSync(indexPath)) unlinkSync(indexPath);
             if (existsSync(pkgPath)) unlinkSync(pkgPath);
-            rmdirSync(app);
+            rmdirSync(shimDir);
         });
 
-        writeFileSync(join(app, "package.json"), STUB_PACKAGE);
-        writeFileSync(join(app, "index.js"), makeStubIndex(patcherJsPath));
+        writeFileSync(join(shimDir, "package.json"), STUB_PACKAGE);
+        writeFileSync(join(shimDir, "index.js"), makeStubIndex(patcherJsPath));
         return true;
     } catch (err) {
         for (let i = undo.length - 1; i >= 0; i--) {

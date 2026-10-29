@@ -4,7 +4,19 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-export const characters = [
+interface Character {
+    id: string;
+    name: string;
+    character: string;
+    img: string;
+    color: string;
+    defaultText: { text: string; x: number; y: number; r: number; s: number; };
+}
+
+let characters: Character[] | undefined;
+
+export function getCharacters() {
+    return characters ??= [
     {
         "id": "3",
         "name": "Airi 01",
@@ -5032,4 +5044,5 @@ export const characters = [
         }
     }
 
-];
+    ];
+}

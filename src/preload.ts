@@ -28,6 +28,18 @@ if (location.protocol !== "data:") {
     invoke(IpcEvents.INIT_FILE_WATCHERS);
 
     if (IS_DISCORD_DESKTOP) {
+        if (process.env.VNCORD_ACCOUNT_ID) {
+            const accountToken = sendSync<string | null>(IpcEvents.VNCORD_ACCOUNT_TOKEN);
+            if (accountToken) {
+                try {
+                    // Runs before Discord's own scripts, so the client boots already logged in and never shows the login screen.
+                    localStorage.setItem("token", JSON.stringify(accountToken));
+                } catch {
+                    // The page may not have committed its origin yet; the native fallback applies the token after load.
+                }
+            }
+        }
+
         webFrame.executeJavaScript(sendSync<string>(IpcEvents.PRELOAD_GET_RENDERER_JS));
         // Not supported in sandboxed preload scripts but Discord doesn't support it either so who cares
         require(process.env.DISCORD_PRELOAD!);

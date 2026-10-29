@@ -7,16 +7,13 @@
 import { NavContextMenuPatchCallback } from "@api/ContextMenu";
 import { definePluginSettings } from "@api/Settings";
 import { getUserSettingLazy } from "@api/UserSettings";
-import { Button } from "@components/Button";
 import ErrorBoundary from "@components/ErrorBoundary";
-import { Flex } from "@components/Flex";
 import { Heading } from "@components/Heading";
 import { Paragraph } from "@components/Paragraph";
-import CustomRpcPlugin from "@plugins/customRPC";
 import { Devs } from "@utils/constants";
 import { Margins } from "@utils/margins";
 import definePlugin, { OptionType } from "@utils/types";
-import { FluxDispatcher, Menu, RunningGameStore, showToast, TextArea, Tooltip, useEffect, useState } from "@webpack/common";
+import { FluxDispatcher, Menu, RunningGameStore, TextArea, Tooltip, useState } from "@webpack/common";
 
 const enum ActivitiesTypes {
     Game,
@@ -82,51 +79,8 @@ function recalculateActivities() {
     ShowCurrentGame.updateSetting(current => current);
 }
 
-function ImportCustomRPCComponent() {
-    return (
-        <Flex flexDirection="column">
-            <Paragraph>Import the application id of the CustomRPC plugin to the filter list</Paragraph>
-            <div>
-                <Button
-                    onClick={() => {
-                        const id = CustomRpcPlugin.settings.store.appID;
-                        if (!id) {
-                            return showToast({ text: "CustomRPC application ID is not set.", variant: "critical" });
-                        }
-
-                        const isAlreadyAdded = idsListPushID?.(id);
-                        if (isAlreadyAdded) {
-                            showToast({ text: "CustomRPC application ID is already added.", variant: "critical" });
-                        }
-                    }}
-                >
-                    Import CustomRPC ID
-                </Button>
-            </div>
-        </Flex>
-    );
-}
-
-let idsListPushID: ((id: string) => boolean) | null = null;
-
 function IdsListComponent(props: { setValue: (value: string) => void; }) {
     const [idsList, setIdsList] = useState<string>(settings.store.idsList ?? "");
-
-    idsListPushID = (id: string) => {
-        const currentIds = new Set(idsList.split(",").map(id => id.trim()).filter(Boolean));
-
-        const isAlreadyAdded = currentIds.has(id) || (currentIds.add(id), false);
-
-        const ids = Array.from(currentIds).join(", ");
-        setIdsList(ids);
-        props.setValue(ids);
-
-        return isAlreadyAdded;
-    };
-
-    useEffect(() => () => {
-        idsListPushID = null;
-    }, []);
 
     function handleChange(newValue: string) {
         setIdsList(newValue);
@@ -136,7 +90,7 @@ function IdsListComponent(props: { setValue: (value: string) => void; }) {
     return (
         <section>
             <Heading tag="h3">Filter List</Heading>
-            <Paragraph className={Margins.bottom8}>Comma separated list of activity IDs to filter (Useful for filtering specific RPC activities and CustomRPC</Paragraph>
+            <Paragraph className={Margins.bottom8}>Comma separated list of activity IDs to filter (Useful for filtering specific RPC activities)</Paragraph>
             <TextArea
                 type="text"
                 value={idsList}
@@ -199,10 +153,6 @@ const registeredGameOverflowContextMenuPatch: NavContextMenuPatchCallback = (chi
 };
 
 const settings = definePluginSettings({
-    importCustomRPC: {
-        type: OptionType.COMPONENT,
-        component: ImportCustomRPCComponent
-    },
     listMode: {
         type: OptionType.SELECT,
         description: "Change the mode of the filter list",

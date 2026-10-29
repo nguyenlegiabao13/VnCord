@@ -90,25 +90,25 @@ export function PluginCard({ plugin, disabled, onRestartNeeded, onMouseEnter, on
     const pluginInfo = [
         {
             condition: isModifiedPlugin,
-            src: "https://tqdcord.pages.dev/assets/icons/vncord/modified.png",
+            src: "https://vncord.pages.dev/assets/icons/vncord/modified.png",
             alt: "Modified",
             title: "Modified Vencord Plugin"
         },
         {
             condition: isVnCordPlugin,
-            src: "https://tqdcord.pages.dev/assets/favicon.png",
+            src: "https://vncord.pages.dev/assets/favicon.png",
             alt: "VnCord",
             title: "VnCord Plugin"
         },
         {
             condition: isVencordPlugin,
-            src: "https://tqdcord.pages.dev/assets/icons/vencord/icon-light.png",
+            src: "https://vncord.pages.dev/assets/icons/vencord/icon-light.png",
             alt: "Vencord",
             title: "Vencord Plugin"
         },
         {
             condition: isUserPlugin,
-            src: "https://tqdcord.pages.dev/assets/icons/misc/userplugin.png",
+            src: "https://vncord.pages.dev/assets/icons/misc/userplugin.png",
             alt: "User",
             title: "User Plugin"
         }

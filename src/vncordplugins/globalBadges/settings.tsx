@@ -88,7 +88,7 @@ export const settings = definePluginSettings({
     apiUrl: {
         type: OptionType.STRING,
         description: "API to use",
-        default: "https://tqdcord.pages.dev/badges/",
+        default: "https://vncord.pages.dev/badges/",
         restartNeeded: false,
         isValid: (value => {
             if (!value) return false;

@@ -140,7 +140,7 @@ const DefaultSettings: Settings = {
 
     cloud: {
         authenticated: false,
-        url: "https://tqdcord.pages.dev/api/cloud/",
+        url: "https://vncord.pages.dev/api/cloud/",
         settingsSync: false,
         settingsSyncVersion: 0
     },

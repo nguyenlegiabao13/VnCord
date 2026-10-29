@@ -11,6 +11,7 @@ export default definePlugin({
     name: "ChatInputButtonAPI",
     description: "API to add buttons to the chat input",
     authors: [Devs.Ven],
+    required: true,
 
     patches: [
         {

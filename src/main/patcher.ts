@@ -39,6 +39,15 @@ if (IS_VESKTOP || IS_EQUIBOP) require.main!.filename = join(dirname(injectorPath
 // @ts-expect-error Untyped method? Dies from cringe
 app.setAppPath(asarPath);
 
+// GPU rendering tweaks, applied before app ready. They move rasterization
+// and buffer copies off the CPU onto the GPU, which keeps scrolling and
+// animations smooth while lowering CPU usage. Same set Vesktop ships.
+if (!IS_VANILLA && !IS_VESKTOP && !IS_EQUIBOP) {
+    app.commandLine.appendSwitch("enable-gpu-rasterization");
+    app.commandLine.appendSwitch("enable-zero-copy");
+    app.commandLine.appendSwitch("ignore-gpu-blocklist");
+}
+
 if (!IS_VANILLA) {
     const settings = RendererSettings.store;
 
@@ -149,7 +158,7 @@ if (!IS_VANILLA) {
         s.set("DANGEROUS_ENABLE_DEVTOOLS_ONLY_ENABLE_IF_YOU_KNOW_WHAT_YOURE_DOING", true);
     });
 
-    process.env.DATA_DIR = join(app.getPath("userData"), "..", "VnCord");
+    process.env.DATA_DIR = process.env.VNCORD_DATA_DIR ?? join(app.getPath("userData"), "..", "VnCord");
     if (settings.plugins?.NoTrack?.disableStackDumping !== false) process.env.ELECTRON_ENABLE_STACK_DUMPING = "true";
 } else {
     console.log("[VnCord] Running in vanilla mode. Not loading VnCord");

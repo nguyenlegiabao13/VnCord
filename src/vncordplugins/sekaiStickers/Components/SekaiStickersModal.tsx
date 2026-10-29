@@ -7,14 +7,15 @@
 import { Flex } from "@components/Flex";
 import { FormSwitch } from "@components/FormSwitch";
 import { Heading } from "@components/Heading";
-import { characters } from "@vncordplugins/sekaiStickers/characters.json";
 import { RenderModalProps } from "@vencord/discord-types";
+import { getCharacters } from "@vncordplugins/sekaiStickers/characters.json";
 import { ChannelStore, Modal, openModal, React, SelectedChannelStore, Slider, TextArea, UploadHandler } from "@webpack/common";
 
 import Canvas from "./Canvas";
 import CharSelectModal from "./Picker";
 
 export default function SekaiStickersModal({ modalProps, settings }: { modalProps: RenderModalProps; settings: any; }) {
+    const characters = getCharacters();
     const [text, setText] = React.useState<string>("奏でーかわいい");
     const [character, setChracter] = React.useState<number>(49);
     const [fontSize, setFontSize] = React.useState<number>(characters[character].defaultText.s);

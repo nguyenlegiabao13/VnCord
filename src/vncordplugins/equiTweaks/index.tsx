@@ -8,10 +8,8 @@ import { ApplicationCommandInputType, sendBotMessage } from "@api/Commands";
 import { findGroupChildrenByChildId, NavContextMenuPatchCallback } from "@api/ContextMenu";
 import { HeaderBarButton } from "@api/HeaderBar";
 import { addMessagePreSendListener, removeMessagePreSendListener } from "@api/MessageEvents";
-import { isPluginEnabled } from "@api/PluginManager";
 import { definePluginSettings, migratePluginSettings, migratePluginToSettings } from "@api/Settings";
 import { ShieldIcon, WarningIcon } from "@components/Icons";
-import customRPC from "@plugins/customRPC";
 import { Devs, VnCordDevs } from "@utils/constants";
 import definePlugin, { OptionType } from "@utils/types";
 import { StandingState } from "@vencord/discord-types/enums";
@@ -254,7 +252,7 @@ export default definePlugin({
         // Show your own activity buttons because discord removes them for who knows why
         {
             find: ".USER_PROFILE_ACTIVITY_BUTTONS),",
-            predicate: () => settings.store.showYourOwnActivityButtons && !isPluginEnabled(customRPC.name),
+            predicate: () => settings.store.showYourOwnActivityButtons,
             replacement: {
                 match: /.getId\(\)===\i.id/,
                 replace: "$& && false"

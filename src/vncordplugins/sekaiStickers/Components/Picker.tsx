@@ -5,12 +5,13 @@
  */
 
 import { Flex } from "@components/Flex";
-import { characters } from "@vncordplugins/sekaiStickers/characters.json";
 import { RenderModalProps } from "@vencord/discord-types";
+import { getCharacters } from "@vncordplugins/sekaiStickers/characters.json";
 import { Modal,React, ScrollerThin, TextInput } from "@webpack/common";
 
 export default function CharSelectModal({ modalProps, setCharacter }: { modalProps: RenderModalProps; setCharacter?: any; }) {
     const [search, setSearch] = React.useState<string>("");
+    const characters = getCharacters();
 
     const memoedSearchChar = React.useMemo(() => {
         const s = search.toLowerCase();
@@ -27,7 +28,7 @@ export default function CharSelectModal({ modalProps, setCharacter }: { modalPro
 
             return null;
         });
-    }, [search, characters]);
+    }, [search]);
     return (
         <Modal {...modalProps} size="lg" title="Select character menu">
             <Flex flexDirection="column" style={{ paddingTop: 12 }}>

@@ -55,7 +55,99 @@ export const { match, P }: { match: typeof TSPattern["match"], P: typeof TSPatte
     P: filters.byProps("when")
 });
 
-export const lodash: typeof import("lodash") = findByPropsLazy("debounce", "cloneDeep");
+function isEqual(a: unknown, b: unknown): boolean {
+    if (Object.is(a, b)) return true;
+    if (typeof a !== "object" || typeof b !== "object" || a === null || b === null) return false;
+
+    if (a instanceof Date || b instanceof Date)
+        return a instanceof Date && b instanceof Date && a.getTime() === b.getTime();
+
+    if (a instanceof RegExp || b instanceof RegExp)
+        return a instanceof RegExp && b instanceof RegExp && a.source === b.source && a.flags === b.flags;
+
+    if (Array.isArray(a) || Array.isArray(b)) {
+        if (!Array.isArray(a) || !Array.isArray(b) || a.length !== b.length) return false;
+        for (let i = 0; i < a.length; i++)
+            if (!isEqual(a[i], b[i])) return false;
+        return true;
+    }
+
+    if (a instanceof Map || b instanceof Map) {
+        if (!(a instanceof Map) || !(b instanceof Map) || a.size !== b.size) return false;
+        for (const [key, value] of a) {
+            if (!b.has(key) || !isEqual(value, b.get(key))) return false;
+        }
+        return true;
+    }
+
+    if (a instanceof Set || b instanceof Set) {
+        if (!(a instanceof Set) || !(b instanceof Set) || a.size !== b.size) return false;
+        const valuesA = Array.from(a.values());
+        const valuesB = Array.from(b.values());
+        for (let i = 0; i < valuesA.length; i++)
+            if (!isEqual(valuesA[i], valuesB[i])) return false;
+        return true;
+    }
+
+    const keysA = Object.keys(a);
+    const keysB = Object.keys(b);
+    if (keysA.length !== keysB.length) return false;
+
+    const recordA = a as Record<string, unknown>;
+    const recordB = b as Record<string, unknown>;
+    for (const key of keysA) {
+        if (!Object.prototype.hasOwnProperty.call(recordB, key)) return false;
+        if (!isEqual(recordA[key], recordB[key])) return false;
+    }
+    return true;
+}
+
+function clamp(num: number, min: number, max: number): number {
+    return Math.min(Math.max(num, min), max);
+}
+
+function throttle<A extends unknown[]>(fn: (...args: A) => void, wait: number): ((...args: A) => void) & { cancel(): void } {
+    let lastArgs: A | null = null;
+    let timeout: ReturnType<typeof setTimeout> | null = null;
+    let lastCall = 0;
+
+    const invoke = (args: A) => {
+        lastCall = Date.now();
+        fn(...args);
+    };
+
+    return Object.assign(
+        (...args: A) => {
+            const remaining = wait - (Date.now() - lastCall);
+
+            if (remaining <= 0) {
+                invoke(args);
+                return;
+            }
+
+            lastArgs = args;
+            if (timeout === null) {
+                timeout = setTimeout(() => {
+                    timeout = null;
+                    const pending = lastArgs;
+                    lastArgs = null;
+                    if (pending !== null) invoke(pending);
+                }, remaining);
+            }
+        },
+        {
+            cancel: () => {
+                if (timeout !== null) {
+                    clearTimeout(timeout);
+                    timeout = null;
+                }
+                lastArgs = null;
+            }
+        }
+    );
+}
+
+export const lodash = { isEqual, clamp, throttle };
 
 export const i18n = mapMangledModuleLazy(['defaultLocale:"en-US"', /initialLocale:\i/], {
     t: m => m?.[Symbol.toStringTag] === "IntlMessagesProxy",

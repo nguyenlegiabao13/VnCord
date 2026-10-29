@@ -19,6 +19,7 @@
 // DO NOT REMOVE UNLESS YOU WISH TO FACE THE WRATH OF THE CIRCULAR DEPENDENCY DEMON!!!!!!!
 import "~plugins";
 import "./fixWeirdAppRegionBug.css";
+import "./flood";
 
 import nativeTitleBarStyles from "./nativeTitleBar.css?managed";
 

@@ -20,6 +20,7 @@
 // @ts-check
 
 import { createPackage } from "@electron/asar";
+import { copyFileSync, existsSync, mkdirSync } from "fs";
 import { readdir, writeFile } from "fs/promises";
 import { dirname, join, resolve } from "path";
 import { fileURLToPath } from "url";
@@ -243,3 +244,18 @@ await Promise.all([
     createPackage("dist/desktop", "dist/desktop.asar"),
     createPackage("dist/equibop", "dist/equibop.asar"),
 ]);
+
+// ship the VnCordCli installer next to the build output. the exe resolves
+// the repo root as two levels up from its own location, which matches both
+// scripts/VnCordCli/ and dist/Installer/.
+if (process.platform === "win32") {
+    const cliDir = join(dirname(fileURLToPath(import.meta.url)), "..", "VnCordCli");
+    const cliExe = join(cliDir, "VnCordCli.exe");
+    if (existsSync(cliExe)) {
+        mkdirSync("dist/Installer", { recursive: true });
+        copyFileSync(cliExe, "dist/Installer/VnCordCli.exe");
+        if (existsSync(join(cliDir, "icon.ico"))) {
+            copyFileSync(join(cliDir, "icon.ico"), "dist/Installer/icon.ico");
+        }
+    }
+}

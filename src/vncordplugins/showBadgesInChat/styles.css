@@ -29,16 +29,31 @@
 
 .vc-sbic-settings-username {
     font-size: 22px;
-    color: white;
+    color: var(--text-normal);
     margin-right: 5px;
 }
 
 .vc-sbic-badge-row {
     display: inline-flex;
+    gap: 2px;
     justify-content: center;
     align-items: center;
     vertical-align: top;
     position: relative;
-    margin-top: 6px !important;
-    margin-left: -3px !important;
+    margin-top: 6px !important; /* Discord sets a larger margin on message decorations */
+    margin-left: -3px !important; /* align the first badge with the message header */
+}
+
+.vc-sbic-badge-row span {
+    display: inline-flex;
+    gap: 2px;
+    align-items: center;
+}
+
+.vc-sbic-badge-row img {
+    transition: transform 0.15s var(--custom-button-hover-transform, ease);
+}
+
+.vc-sbic-badge-row img:hover {
+    transform: scale(1.15);
 }

@@ -53,6 +53,13 @@
     height: 40px;
 }
 
+.vc-plugins-source-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 8px 0 12px;
+}
+
 .vc-plugins-dep-name {
     margin: 0 auto;
 }

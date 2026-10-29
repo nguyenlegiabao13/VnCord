@@ -41,3 +41,6 @@ misc/bundle
 
 # intl scripts
 misc/scripts
+
+# VnCordCli installer exe ships with the repo
+!scripts/VnCordCli/VnCordCli.exe

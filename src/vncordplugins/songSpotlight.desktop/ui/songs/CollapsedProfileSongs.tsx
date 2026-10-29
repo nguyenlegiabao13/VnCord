@@ -5,6 +5,11 @@
  */
 
 import { BaseText } from "@components/index";
+import type { RenderSongInfo } from "@song-spotlight/api/handlers";
+import { UserData } from "@song-spotlight/api/structs";
+import { sid } from "@song-spotlight/api/util";
+import { classes } from "@utils/misc";
+import { User } from "@vencord/discord-types";
 import { Native } from "@vncordplugins/songSpotlight.desktop/service";
 import {
     ContainerClasses,
@@ -13,11 +18,6 @@ import {
     ProfileCardClasses,
     Spinner,
 } from "@vncordplugins/songSpotlight.desktop/ui/common";
-import { RenderSongInfo } from "@song-spotlight/api/handlers";
-import { UserData } from "@song-spotlight/api/structs";
-import { sid } from "@song-spotlight/api/util";
-import { classes } from "@utils/misc";
-import { User } from "@vencord/discord-types";
 import {
     openUserProfileModal,
     SelectedChannelStore,

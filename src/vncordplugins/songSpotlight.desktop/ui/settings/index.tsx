@@ -8,6 +8,11 @@ import { BaseText } from "@components/BaseText";
 import { Button } from "@components/Button";
 import ErrorBoundary from "@components/ErrorBoundary";
 import { Flex } from "@components/Flex";
+import type { UserData } from "@song-spotlight/api/structs";
+import { sid } from "@song-spotlight/api/util";
+import { readClipboard } from "@utils/clipboard";
+import { copyWithToast } from "@utils/discord";
+import { RenderModalProps } from "@vencord/discord-types";
 import { apiConstants, deleteData, getData, saveData } from "@vncordplugins/songSpotlight.desktop/lib/api";
 import { presentOAuth2Modal } from "@vncordplugins/songSpotlight.desktop/lib/oauth2";
 import { useAuthorizationStore } from "@vncordplugins/songSpotlight.desktop/lib/stores/AuthorizationStore";
@@ -16,11 +21,6 @@ import { cl } from "@vncordplugins/songSpotlight.desktop/lib/utils";
 import { Native } from "@vncordplugins/songSpotlight.desktop/service";
 import { Spinner } from "@vncordplugins/songSpotlight.desktop/ui/common";
 import SongList from "@vncordplugins/songSpotlight.desktop/ui/settings/SongList";
-import { UserData, UserDataSchema } from "@song-spotlight/api/structs";
-import { sid } from "@song-spotlight/api/util";
-import { readClipboard } from "@utils/clipboard";
-import { copyWithToast } from "@utils/discord";
-import { RenderModalProps } from "@vencord/discord-types";
 import { Alerts, Modal, openModal, Parser, showToast, useCallback, useEffect, useMemo, useRef, useState } from "@webpack/common";
 
 interface ImportButtonProps {
@@ -28,6 +28,13 @@ interface ImportButtonProps {
     pending: boolean;
     setPending(pending: boolean): void;
     onImport(data: UserData): void;
+}
+
+function isSong(value: unknown) {
+    if (typeof value !== "object" || value === null) return false;
+    return "id" in value && typeof value.id === "string"
+        && "service" in value && typeof value.service === "string"
+        && "type" in value && typeof value.type === "string";
 }
 
 function ImportButton({ overwrite, pending, setPending, onImport }: ImportButtonProps) {
@@ -42,12 +49,12 @@ function ImportButton({ overwrite, pending, setPending, onImport }: ImportButton
             return showToast({ text: "No JSON in clipboard!", variant: "critical" });
         }
 
-        const { error, data } = UserDataSchema.max(apiConstants.songLimit).safeParse(json);
-        if (error) {
+        if (!Array.isArray(json) || json.length > apiConstants.songLimit || !json.every(isSong)) {
             setPending(false);
             return showToast({ text: "Invalid Song Spotlight data in clipboard!", variant: "critical" });
         }
 
+        const data: UserData = json;
         const validated = await Promise.allSettled(data.map(song => Native.validateSong(song)));
         if (!validated.every(x => x.status === "fulfilled" && x.value)) {
             setPending(false);

@@ -155,6 +155,11 @@ const settings = definePluginSettings({
         type: OptionType.BOOLEAN,
         default: false
     },
+    enableProfileCustomization: {
+        description: "Unlocks Nitro profile customization (banner, accent color, avatar decorations and profile effects)",
+        type: OptionType.BOOLEAN,
+        default: true
+    },
 });
 
 function hasPermission(channelId: string, permission: bigint) {
@@ -202,7 +207,7 @@ function showCannotEmbedNotice() {
 export default definePlugin({
     name: "FakeNitro",
     authors: [Devs.Arjix, Devs.D3SOX, Devs.Ven, Devs.fawn, Devs.captain, Devs.Nuckyz, Devs.AutumnVN, Devs.sadan],
-    description: "Allows you to send fake emojis/stickers, use nitro themes, and stream in nitro quality",
+    description: "Allows you to send fake emojis/stickers, use nitro themes, profile customization, and stream in nitro quality",
     tags: ["Emotes", "Appearance", "Customisation", "Chat"],
     dependencies: ["MessageEventsAPI"],
 
@@ -236,6 +241,21 @@ export default definePlugin({
                     replace: "return true;"
                 }
             ],
+        },
+        // Unlock Nitro profile customization (banner, accent color, avatar decorations, profile effects)
+        {
+            find: "hasThemeColors(){",
+            predicate: () => settings.store.enableProfileCustomization,
+            replacement: [
+                {
+                    match: /get canUsePremiumProfileCustomization\(\){return /,
+                    replace: "$&true||"
+                },
+                {
+                    match: /get canEditThemes\(\){return /,
+                    replace: "$&true||"
+                }
+            ]
         },
         // Patch the emoji picker in voice calls to not be bypassed by fake nitro
         {

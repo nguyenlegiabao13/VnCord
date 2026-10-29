@@ -6,13 +6,13 @@
 }
 
 .vc-inrole-member-list::-webkit-scrollbar {
-    background-color: #fff1;
+    background-color: var(--scrollbar-thin-track);
     border-radius: 100px;
     width: 10px;
 }
 
 .vc-inrole-member-list::-webkit-scrollbar-thumb {
-    background-color: #fff3;
+    background-color: var(--scrollbar-thin-thumb);
     border-radius: 100px;
 }
 

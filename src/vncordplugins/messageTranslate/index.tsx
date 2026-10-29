@@ -6,7 +6,6 @@
 
 import "./styles.css";
 
-import { TranslateIcon } from "@plugins/translate/TranslateIcon";
 import { VnCordDevs } from "@utils/constants";
 import { classNameFactory } from "@utils/css";
 import definePlugin from "@utils/types";
@@ -18,6 +17,14 @@ import { clearCache, getCached, hasFailed, isInProgress, translate } from "./uti
 
 const cl = classNameFactory("mt-");
 const translatedMessages = new Map<string, string>();
+
+function TranslateIcon({ height = 20, width = 20, className }: { height?: number; width?: number; className?: string; }) {
+    return (
+        <svg viewBox="0 96 960 960" height={height} width={width} className={className}>
+            <path fill="currentColor" d="m475 976 181-480h82l186 480h-87l-41-126H604l-47 126h-82Zm151-196h142l-70-194h-2l-70 194Zm-466 76-55-55 204-204q-38-44-67.5-88.5T190 416h87q17 33 37.5 62.5T361 539q45-47 75-97.5T487 336H40v-80h280v-80h80v80h280v80H567q-22 69-58.5 135.5T419 598l98 99-30 81-127-122-200 200Z" />
+        </svg>
+    );
+}
 
 function shouldTranslate(message: MessageWithContent): boolean {
     if (!message.content || typeof message.content !== "string") return false;

@@ -8,11 +8,11 @@ import { BaseText } from "@components/BaseText";
 import ErrorBoundary from "@components/ErrorBoundary";
 import { Flex } from "@components/Flex";
 import { PlusIcon } from "@components/Icons";
+import { parsers } from "@song-spotlight/api/handlers";
+import type { Song } from "@song-spotlight/api/structs";
+import { RenderModalProps } from "@vencord/discord-types";
 import { cl, logger } from "@vncordplugins/songSpotlight.desktop/lib/utils";
 import { Native } from "@vncordplugins/songSpotlight.desktop/service";
-import { parsers } from "@song-spotlight/api/handlers";
-import { Song } from "@song-spotlight/api/structs";
-import { RenderModalProps } from "@vencord/discord-types";
 import { Clickable, closeModal, Modal, openModal, TextInput, useState } from "@webpack/common";
 
 interface AddSongModalProps {

@@ -89,12 +89,12 @@
 }
 
 .emoji-container::-webkit-scrollbar {
-    background-color: #fff1;
+    background-color: var(--scrollbar-thin-track);
     width: 10px;
 }
 
 .emoji-container::-webkit-scrollbar-thumb {
-    background-color: #fff3;
+    background-color: var(--scrollbar-thin-thumb);
 }
 
 .no-emoji-message {

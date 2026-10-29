@@ -1,0 +1,90 @@
+.vc-fake-badges-picker {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+.vc-fake-badges-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.vc-fake-badges-note {
+    color: var(--text-muted);
+    font-size: 12px;
+    line-height: 1.35;
+}
+
+.vc-fake-badges-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+    gap: 8px;
+}
+
+.vc-fake-badges-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 6px 6px;
+    border: 2px solid var(--background-modifier-accent);
+    border-radius: var(--radius-sm);
+    background: var(--background-secondary);
+    opacity: 0.5;
+    transition: border-color 0.15s ease, background-color 0.15s ease, opacity 0.15s ease;
+}
+
+.vc-fake-badges-tile:hover {
+    background: var(--background-modifier-hover);
+    opacity: 0.8;
+}
+
+.vc-fake-badges-tile.vc-fake-badges-active {
+    border-color: var(--brand-500);
+    opacity: 1;
+}
+
+.vc-fake-badges-toggle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    padding: 0;
+    border: none;
+    background: none;
+    color: var(--text-normal);
+    cursor: pointer;
+    font: inherit;
+}
+
+.vc-fake-badges-icon {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+.vc-fake-badges-name {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.2;
+    text-align: center;
+    word-break: normal;
+    overflow-wrap: anywhere;
+}
+
+.vc-fake-badges-tier {
+    width: 100%;
+    padding: 2px;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: var(--input-background, var(--background-tertiary));
+    color: var(--text-normal);
+    font-size: 11px;
+}
+
+.vc-fake-badges-tier option {
+    background: var(--background-floating);
+    color: var(--text-normal);
+}

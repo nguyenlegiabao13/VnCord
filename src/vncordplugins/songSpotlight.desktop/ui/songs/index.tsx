@@ -8,6 +8,11 @@ import { BaseText } from "@components/BaseText";
 import { Flex } from "@components/Flex";
 import { LinkIcon } from "@components/Icons";
 import { Link } from "@components/Link";
+import type { RenderInfoEntry, RenderInfoEntryBased, RenderSongInfo } from "@song-spotlight/api/handlers";
+import { Song as SongType } from "@song-spotlight/api/structs";
+import { isListLayout, sid } from "@song-spotlight/api/util";
+import { copyWithToast } from "@utils/discord";
+import { classes } from "@utils/misc";
 import { apiConstants } from "@vncordplugins/songSpotlight.desktop/lib/api";
 import { useSongStore } from "@vncordplugins/songSpotlight.desktop/lib/stores/SongStore";
 import { cl, formatCoverTooltip, formatDurationMs } from "@vncordplugins/songSpotlight.desktop/lib/utils";
@@ -25,11 +30,6 @@ import AudioPlayer from "@vncordplugins/songSpotlight.desktop/ui/components/Audi
 import ProgressCircle from "@vncordplugins/songSpotlight.desktop/ui/components/ProgressCircle";
 import ServiceIcon from "@vncordplugins/songSpotlight.desktop/ui/components/ServiceIcon";
 import { openSettingsModal } from "@vncordplugins/songSpotlight.desktop/ui/settings";
-import { RenderInfoEntry, RenderInfoEntryBased, RenderSongInfo } from "@song-spotlight/api/handlers";
-import { Song as SongType } from "@song-spotlight/api/structs";
-import { isListLayout, sid } from "@song-spotlight/api/util";
-import { copyWithToast } from "@utils/discord";
-import { classes } from "@utils/misc";
 import { Clickable, ContextMenuApi, FluxDispatcher, Menu, React, ScrollerThin, showToast, Tooltip, useCallback, useMemo, useRef, useState } from "@webpack/common";
 
 interface SongEntryProps {

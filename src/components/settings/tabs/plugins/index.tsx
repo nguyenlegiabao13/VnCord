@@ -101,12 +101,11 @@ const enum SearchStatus {
     FAVORITES,
     ENABLED,
     DISABLED,
-    VNCORD,
-    VENCORD,
     NEW,
-    USER_PLUGINS,
     API_PLUGINS
 }
+
+type PluginSource = "all" | "vencord" | "vncord" | "user";
 
 export const ExcludedReasons: Record<PluginTarget, string> = {
     desktop: "Discord Desktop app or Vesktop/Equibop",
@@ -197,13 +196,33 @@ export default function PluginSettings() {
 
     const hasUserPlugins = useMemo(() => !IS_STANDALONE && Object.values(PluginMeta).some(m => m.userPlugin), []);
 
-    const [searchValue, setSearchValue] = useState({ value: "", tags: [] as PluginTag[], status: SearchStatus.ALL });
+    const sourceCounts = useMemo(() => {
+        const counts: Record<PluginSource, number> = { all: 0, vencord: 0, vncord: 0, user: 0 };
+        for (const p of sortedPlugins) {
+            if (p.hidden || (!p.settings?.def && p.name.endsWith("API"))) continue;
+            counts.all++;
+            const meta = PluginMeta[p.name];
+            if (meta?.userPlugin) counts.user++;
+            else if (meta?.folderName.startsWith("src/vncordplugins/")) counts.vncord++;
+            else counts.vencord++;
+        }
+        return counts;
+    }, [sortedPlugins]);
+
+    const sourceButtons: { source: PluginSource; label: string }[] = [
+        { source: "all", label: "All Plugins" },
+        { source: "vencord", label: "Vencord Plugins" },
+        { source: "vncord", label: "VnCord Plugins" },
+    ];
+    if (hasUserPlugins) sourceButtons.push({ source: "user", label: "User Plugins" });
+
+    const [searchValue, setSearchValue] = useState({ value: "", tags: [] as PluginTag[], status: SearchStatus.ALL, source: "all" as PluginSource });
 
     const search = searchValue.value.toLowerCase();
     const onSearch = (query: string) => setSearchValue(prev => ({ ...prev, value: query }));
 
     const pluginFilter = useCallback((plugin: typeof Plugins[keyof typeof Plugins], newPluginsSet: Set<string> | null) => {
-        const { status, tags } = searchValue;
+        const { status, tags, source } = searchValue;
 
         switch (status) {
             case SearchStatus.FAVORITES:
@@ -215,21 +234,19 @@ export default function PluginSettings() {
             case SearchStatus.ENABLED:
                 if (!isPluginEnabled(plugin.name)) return false;
                 break;
-            case SearchStatus.VNCORD:
-                if (!PluginMeta[plugin.name].folderName.startsWith("src/vncordplugins/")) return false;
-                break;
-            case SearchStatus.VENCORD:
-                if (!PluginMeta[plugin.name].folderName.startsWith("src/plugins/")) return false;
-                break;
             case SearchStatus.NEW:
                 if (!newPluginsSet?.has(plugin.name)) return false;
-                break;
-            case SearchStatus.USER_PLUGINS:
-                if (!PluginMeta[plugin.name]?.userPlugin) return false;
                 break;
             case SearchStatus.API_PLUGINS:
                 if (!plugin.name.endsWith("API")) return false;
                 break;
+        }
+
+        if (source !== "all") {
+            const meta = PluginMeta[plugin.name];
+            if (source === "user") {
+                if (!meta?.userPlugin) return false;
+            } else if (!meta?.folderName.startsWith(source === "vencord" ? "src/plugins/" : "src/vncordplugins/")) return false;
         }
 
         if (tags.length && tags.some(t => !plugin.tags?.includes(t))) return false;
@@ -420,10 +437,7 @@ export default function PluginSettings() {
                             { label: "Show Favorites", value: SearchStatus.FAVORITES },
                             { label: "Show Enabled", value: SearchStatus.ENABLED },
                             { label: "Show Disabled", value: SearchStatus.DISABLED },
-                            { label: "Show VnCord", value: SearchStatus.VNCORD },
-                            { label: "Show Vencord", value: SearchStatus.VENCORD },
                             { label: "Show New", value: SearchStatus.NEW },
-                            hasUserPlugins && { label: "Show UserPlugins", value: SearchStatus.USER_PLUGINS },
                             { label: "Show API Plugins", value: SearchStatus.API_PLUGINS },
                         ].filter(isTruthy)}
                         serialize={String}
@@ -444,6 +458,19 @@ export default function PluginSettings() {
             </ErrorBoundary>
 
             <HeadingTertiary className={Margins.top20}>Plugins</HeadingTertiary>
+
+            <div className={cl("source-buttons")}>
+                {sourceButtons.map(({ source, label }) => (
+                    <Button
+                        key={source}
+                        size="small"
+                        variant={searchValue.source === source ? "primary" : "secondary"}
+                        onClick={() => setSearchValue(prev => ({ ...prev, source }))}
+                    >
+                        {label} ({sourceCounts[source]})
+                    </Button>
+                ))}
+            </div>
 
             {plugins.length || requiredPlugins.length
                 ? (

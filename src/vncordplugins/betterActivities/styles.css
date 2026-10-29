@@ -54,7 +54,7 @@
     justify-content: center;
     cursor: pointer;
     border-radius: 3px;
-    background-color: #ffffff4d;
+    background-color: var(--background-modifier-hover);
 }
 
 .vc-bactivities-controls [class*="vc-activities-caret-"].disabled {

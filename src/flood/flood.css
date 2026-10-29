@@ -1,0 +1,37 @@
+.vc-flood-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+.vc-flood-muted {
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+.vc-flood-file-input {
+    display: none;
+}
+
+.vc-flood-divider {
+    margin: 16px 0 12px;
+}
+
+.vc-flood-select {
+    flex: 1;
+}
+
+.vc-flood-delay-input {
+    width: 80px;
+}
+
+.vc-flood-start {
+    width: 100%;
+    margin-top: 16px;
+}
+
+.vc-flood-editor {
+    min-height: 220px;
+}
